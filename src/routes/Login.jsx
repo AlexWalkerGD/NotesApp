@@ -9,10 +9,16 @@ const Login = () => {
   const navigate = useNavigate();
 
   async function loginUser() {
-    await api.post("/auth/login", {
-      email: inputEmail.current.value,
-      password: inputPassword.current.value,
-    });
+    try {
+      const response = await api.post("/auth/login", {
+        email: inputEmail.current.value,
+        password: inputPassword.current.value,
+      });
+      localStorage.setItem("token", response.data.token);
+      navigate("/notes");
+    } catch (error) {
+      console.error({ error });
+    }
   }
 
   return (
@@ -28,7 +34,7 @@ const Login = () => {
           />
           <input
             className="border-gray-600 rounded-xs h-8 bg-cyan-700 text-white text-md pl-2 outline-none"
-            type="text"
+            type="password"
             placeholder="password"
             ref={inputPassword}
           />
@@ -44,7 +50,6 @@ const Login = () => {
       <h1
         onClick={() => navigate("/")}
         className="text-center pt-3 font-bold text-l text-cyan-900 cursor-pointer"
-        href
       >
         Register
       </h1>

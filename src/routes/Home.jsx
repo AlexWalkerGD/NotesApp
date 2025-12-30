@@ -9,10 +9,14 @@ const Home = () => {
   const navigate = useNavigate();
 
   async function createUser() {
-    await api.post("/auth/register", {
-      email: inputEmail.current.value,
-      password: inputPassword.current.value,
-    });
+    try {
+      await api.post("/auth/register", {
+        email: inputEmail.current.value,
+        password: inputPassword.current.value,
+      });
+    } catch (error) {
+      console.error({ error });
+    }
   }
 
   return (
@@ -28,7 +32,7 @@ const Home = () => {
           />
           <input
             className="border-gray-600 rounded-xs h-8 bg-cyan-700 text-white text-md pl-2 outline-none"
-            type="text"
+            type="password"
             placeholder="password"
             ref={inputPassword}
           />
@@ -44,7 +48,6 @@ const Home = () => {
       <h1
         onClick={() => navigate("/login")}
         className="text-center pt-3 font-bold text-l text-cyan-900 cursor-pointer"
-        href
       >
         Login
       </h1>
