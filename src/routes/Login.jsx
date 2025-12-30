@@ -37,6 +37,7 @@ const Login = () => {
             type="password"
             placeholder="password"
             ref={inputPassword}
+            autoComplete="current-password"
           />
           <button
             className="rounded-md bg-gray-400 h-7 border-none font-bold cursor-pointer hover:bg-gray-500"
