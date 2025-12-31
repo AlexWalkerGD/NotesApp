@@ -2,7 +2,7 @@ import React from "react";
 import api from "../services/GetApi";
 import { useRef } from "react";
 
-const NewCard = ({ closeCard }) => {
+const NewCard = ({ closeCard, addNote }) => {
   const inputTitle = useRef();
   const inputContent = useRef();
 
@@ -13,7 +13,7 @@ const NewCard = ({ closeCard }) => {
       return;
     }
     try {
-      await api.post(
+      const response = await api.post(
         "/notes",
         {
           title: inputTitle.current.value,
@@ -23,6 +23,8 @@ const NewCard = ({ closeCard }) => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
+
+      addNote(response.data);
       closeCard();
     } catch (error) {
       console.error({ error });

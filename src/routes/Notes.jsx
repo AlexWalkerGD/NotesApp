@@ -9,8 +9,11 @@ import NewCard from "../components/NewCard.jsx";
 const Notes = () => {
   const [notes, setNotes] = useState([]);
   const [card, setCard] = useState(false);
-
   const navigate = useNavigate();
+
+  const addNote = (newNote) => {
+    setNotes((prevNotes) => [...prevNotes, newNote]);
+  };
 
   async function getNotes(token) {
     const notesResponse = await api.get("/notes", {
@@ -18,6 +21,25 @@ const Notes = () => {
     });
 
     setNotes(notesResponse.data);
+    console.log(notes);
+  }
+
+  async function deleteNote(noteId) {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("Unauthorized");
+      return;
+    }
+    console.log(noteId);
+    try {
+      await api.delete(`/notes/${noteId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      setNotes((prevNotes) => prevNotes.filter((note) => note._id !== noteId));
+    } catch (error) {
+      console.error({ error });
+    }
   }
 
   useEffect(() => {
@@ -43,7 +65,7 @@ const Notes = () => {
       }
     };
     validateUser();
-  }, [notes]);
+  }, []);
 
   return (
     <div>
@@ -62,13 +84,19 @@ const Notes = () => {
 
       {card && (
         <div className="flex flex-col gap-5 items-center pt-10">
-          <NewCard closeCard={() => setCard(false)} />
+          <NewCard closeCard={() => setCard(false)} addNote={addNote} />
         </div>
       )}
       <div className="grid grid-cols-2 gap-5 items-center pt-10 px-7">
         {notes.map((note) => (
           <div>
-            <NoteCard title={note.title} description={note.content} />
+            <NoteCard
+              key={note._id}
+              title={note.title}
+              description={note.content}
+              noteId={note._id}
+              onDelete={deleteNote}
+            />
           </div>
         ))}
       </div>
