@@ -1,4 +1,3 @@
-import React from "react";
 import api from "../services/GetApi";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -76,30 +75,41 @@ const Notes = () => {
   }, []);
 
   return (
-    <div>
-      <div className="flex flex-row justify-between pt-10 ">
-        <span className="px-10"></span>
-        <h1 className="text-3xl text-center flex items-center font-semibold text-cyan-800">
+    <div className="min-h-screen bg-cyan-100 px-5 py-10">
+      {/* Header */}
+      <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-5">
+        <h1 className="text-4xl md:text-5xl font-bold text-cyan-800">
           Your Notes
         </h1>
+
         <button
-          className="bg-cyan-900 w-10 h-10 m-2 text-3xl text-white text-center pb-2 cursor-pointer hover:bg-cyan-700"
+          className="
+            bg-cyan-900 text-white text-3xl w-14 h-14 rounded-full
+            hover:bg-cyan-700 hover:shadow-lg hover:scale-105
+            transition-all duration-300
+            flex items-center justify-center pb-2 text-4xl cursor-pointer
+          "
           onClick={() => setCard(true)}
         >
           +
         </button>
       </div>
 
+      {/* NewCard */}
       {card && (
-        <div className="flex flex-col gap-5 items-center pt-10">
+        <div className="flex justify-center mb-10 animate-fade-in">
           <NewCard closeCard={() => setCard(false)} addNote={addNote} />
         </div>
       )}
-      <div className="grid grid-cols-2 gap-5 items-center pt-10 px-7">
+
+      {/* Grid */}
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6  px-5">
         {notes.map((note) => (
-          <div>
+          <div
+            key={note._id}
+            className="transition-transform transform hover:scale-105"
+          >
             <NoteCard
-              key={note._id}
               title={note.title}
               description={note.content}
               noteId={note._id}

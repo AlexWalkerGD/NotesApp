@@ -87,7 +87,7 @@ const Card = ({ title, description, noteId, onDelete, onUpdate }) => {
           >
             <button
               onClick={() => onDelete(noteId)}
-              className="px-4 py-1 bg-gray-300 hover:bg-gray-400 rounded-lg font-medium text-cyan-900 cursor-pointer"
+              className="px-4 py-1 cursor-pointer bg-gray-300 hover:bg-gray-400 rounded-lg font-medium text-cyan-900 cursor-pointer"
             >
               Remove
             </button>
@@ -95,10 +95,9 @@ const Card = ({ title, description, noteId, onDelete, onUpdate }) => {
           <div className="rounded-sm flex justify-start items-end">
             <button
               className="
-        absolute top-2 right-2
-        p-2 rounded bg-black/40
-        hover:bg-black/60 transition cursor-pointer
-      "
+    absolute top-2 right-2 p-2 rounded bg-black/40 hover:bg-black/60
+    opacity-0 group-hover:opacity-100 transition-opacity duration-300 cursor-pointer
+  "
               onClick={() => setEditCard(true)}
             >
               <MdEdit className="text-white" />

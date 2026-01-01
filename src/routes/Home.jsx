@@ -1,4 +1,3 @@
-import React from "react";
 import api from "../services/GetApi";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -9,55 +8,91 @@ const Home = () => {
   const inputPassword = useRef();
   const navigate = useNavigate();
 
-  async function createUser() {
+  async function createUser(e) {
+    e.preventDefault();
     try {
       await api.post("/auth/register", {
         email: inputEmail.current.value,
         password: inputPassword.current.value,
       });
-      toast.success("Registo criado com sucesso!");
+      toast.success("Registration created successfully!");
+      inputEmail.current.value = "";
+      inputPassword.current.value = "";
     } catch (error) {
       console.error({ error });
-      toast.error("Erro ao criar registo!");
+      toast.error("Error registering!");
     }
   }
 
   return (
-    <div className="">
-      <div className="flex items-center flex-col pt-4">
-        <form className="flex flex-col gap-6 p-5 rounded-xs bg-cyan-900 max-w-md w-sm  border-2">
-          <h1 className="text-white text-2xl text-center">Register</h1>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-cyan-100">
+      <div className="flex items-center flex-col">
+        <form
+          onSubmit={createUser}
+          className="
+            flex flex-col gap-6 p-8 rounded-2xl bg-cyan-900
+            shadow-2xl border-2 border-cyan-800 max-w-md w-full
+            transition-transform transform hover:scale-105
+          "
+        >
+          <h1 className="text-white text-3xl font-bold text-center mb-4">
+            Register
+          </h1>
+
+          {/* Input Email */}
           <input
-            className="border-gray-600 rounded-xs h-8 bg-cyan-700 text-white text-md pl-2 outline-none"
+            className="
+              border-2 border-cyan-700 rounded-lg h-10 bg-cyan-700
+              text-white text-md pl-3 outline-none
+              focus:border-cyan-300 focus:ring-2 focus:ring-cyan-300
+              transition-all duration-300
+            "
             type="email"
-            placeholder="email"
+            placeholder="Email"
             required
             ref={inputEmail}
           />
+
+          {/* Input Password */}
           <input
-            className="border-gray-600 rounded-xs h-8 bg-cyan-700 text-white text-md pl-2 outline-none"
+            className="
+              border-2 border-cyan-700 rounded-lg h-10 bg-cyan-700
+              text-white text-md pl-3 outline-none
+              focus:border-cyan-300 focus:ring-2 focus:ring-cyan-300
+              transition-all duration-300
+            "
             type="password"
-            placeholder="password"
+            placeholder="Password"
             required
             minLength={8}
             ref={inputPassword}
             autoComplete="current-password"
           />
+
+          {/* Button */}
           <button
-            className="rounded-md bg-gray-400 h-7 border-none font-bold cursor-pointer hover:bg-gray-500"
+            className="
+              rounded-lg bg-gray-200 h-10 font-bold cursor-pointer
+              hover:bg-gray-400 active:scale-95 transition-all duration-200
+              text-cyan-900 text-lg
+            "
             type="submit"
-            onClick={createUser}
           >
             Register
           </button>
         </form>
+
+        {/* Link to login */}
+        <h1
+          onClick={() => navigate("/login")}
+          className="
+            text-center pt-5 font-bold text-lg text-cyan-900
+            cursor-pointer hover:text-cyan-700 transition-colors duration-300
+          "
+        >
+          Already have an account? Login
+        </h1>
       </div>
-      <h1
-        onClick={() => navigate("/login")}
-        className="text-center pt-3 font-bold text-l text-cyan-900 cursor-pointer"
-      >
-        Login
-      </h1>
     </div>
   );
 };
