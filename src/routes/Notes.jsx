@@ -11,6 +11,14 @@ const Notes = () => {
   const [card, setCard] = useState(false);
   const navigate = useNavigate();
 
+  const handleUpdateNote = (updatedNote) => {
+    setNotes((prevNotes) =>
+      prevNotes.map((note) =>
+        note._id === updatedNote._id ? updatedNote : note
+      )
+    );
+  };
+
   const addNote = (newNote) => {
     setNotes((prevNotes) => [...prevNotes, newNote]);
   };
@@ -96,6 +104,7 @@ const Notes = () => {
               description={note.content}
               noteId={note._id}
               onDelete={deleteNote}
+              onUpdate={handleUpdateNote}
             />
           </div>
         ))}

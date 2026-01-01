@@ -1,5 +1,6 @@
 import React from "react";
 import api from "../services/GetApi";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
 
@@ -18,6 +19,7 @@ const Login = () => {
       navigate("/notes");
     } catch (error) {
       console.error({ error });
+      toast.error("Erro ao fazer login!");
     }
   }
 
@@ -30,18 +32,21 @@ const Login = () => {
             className="border-gray-600 rounded-xs h-8 bg-cyan-700 text-white text-md pl-2 outline-none"
             type="text"
             placeholder="email"
+            required
             ref={inputEmail}
           />
           <input
             className="border-gray-600 rounded-xs h-8 bg-cyan-700 text-white text-md pl-2 outline-none"
             type="password"
             placeholder="password"
+            required
+            minLength={8}
             ref={inputPassword}
             autoComplete="current-password"
           />
           <button
             className="rounded-md bg-gray-400 h-7 border-none font-bold cursor-pointer hover:bg-gray-500"
-            type="button"
+            type="submit"
             onClick={loginUser}
           >
             Login
