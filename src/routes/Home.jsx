@@ -25,7 +25,7 @@ const Home = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-cyan-100">
+    <div className="min-h-screen flex flex-col items-center pt-25 bg-cyan-100">
       <div className="flex items-center flex-col">
         <form
           onSubmit={createUser}
