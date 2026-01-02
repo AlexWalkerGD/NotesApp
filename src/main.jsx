@@ -9,28 +9,25 @@ import Notes from "./routes/Notes.jsx";
 import "./index.css";
 import App from "./App.jsx";
 
-const router = createBrowserRouter(
-  [
-    {
-      element: <App />,
-      children: [
-        {
-          path: "/",
-          element: <Home />,
-        },
-        {
-          path: "/login",
-          element: <Login />,
-        },
-        {
-          path: "/notes",
-          element: <Notes />,
-        },
-      ],
-    },
-  ],
-  { basename: import.meta.env.REACT_APP_BASENAME || "/" }
-);
+const router = createBrowserRouter([
+  {
+    element: <App />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
+      },
+      {
+        path: "/notes",
+        element: <Notes />,
+      },
+    ],
+  },
+]);
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
