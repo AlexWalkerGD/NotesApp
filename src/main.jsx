@@ -29,7 +29,7 @@ const router = createBrowserRouter(
       ],
     },
   ],
-  { basename: "/NotesApp" }
+  { basename: import.meta.env.REACT_APP_BASENAME || "/" }
 );
 
 createRoot(document.getElementById("root")).render(
